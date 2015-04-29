@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :users
+  get 'users/new', to: redirect('/kaydol')
+  resources :users, expect: :index
+  get '/kaydol', to: 'users#new', as: :register
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
