@@ -10,9 +10,9 @@
 			<p><%= @user.email %></p>
 			<div class="button-bar">
 				<ul class="button-group radius">
-					<li><%= link_to "Konular", user_path(@user, sayfa: 'konular'), class: 'small button secondary' %></li>
-					<li><%= link_to "Yorumlar", user_path(@user, sayfa: 'yorumlar'), class: 'small button secondary' %></li>
-					<li><%= link_to "Profilimi düzenle", edit_user_path(@user), class: 'small button secondary' %></li>
+					<li><%= link_to "Konular", profile_path(@user, sayfa: 'konular'), class: 'small button secondary' %></li>
+					<li><%= link_to "Yorumlar", profile_path(@user, sayfa: 'yorumlar'), class: 'small button secondary' %></li>
+					<li><%= link_to "Profilimi düzenle", edit_profile_path(@user), class: 'small button secondary' %></li>
 					<li><%= link_to "Hesabımı sil.", @user, method: :delete, data: {confirm: 'hesabı silmek istediğinize emin misiniz ?'}, class: 'small button alert'  %></li>
 				</ul>
 			</div>
