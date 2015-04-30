@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resource :session, only: [:new, :create, :destroy]
+  get '/oturum_ac', to: 'sessions#new', as: :login
+  delete '/oturup_kapat', to: 'sessions#destroy', as: :logout
+
   get '/:id', to: 'users#show', as: :profile
   get '/:id/edit', to: 'users#edit', as: :edit_profile
   get 'users/new', to: redirect('/kaydol')
