@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  root 'forums#index'
+  get '/forumlar', to: 'forums#index', as: :forums
+  get '/forumlar/:id', to: 'forums#show', as: :forum
+
   resource :session, only: [:new, :create, :destroy]
   get '/oturum_ac', to: 'sessions#new', as: :login
   delete '/oturup_kapat', to: 'sessions#destroy', as: :logout
