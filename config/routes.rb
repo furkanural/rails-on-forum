@@ -1,17 +1,22 @@
 Rails.application.routes.draw do
-  root 'forums#index'
-  get '/forumlar', to: 'forums#index', as: :forums
-  get '/forumlar/:id', to: 'forums#show', as: :forum
-
-  resource :session, only: [:new, :create, :destroy]
   get '/oturum_ac', to: 'sessions#new', as: :login
   delete '/oturup_kapat', to: 'sessions#destroy', as: :logout
+  resource :session, only: :create
 
-  get '/:id', to: 'users#show', as: :profile
-  get '/:id/edit', to: 'users#edit', as: :edit_profile
-  get 'users/new', to: redirect('/kaydol')
-  resources :users, expect: :index
+  resources :forums, only: [:index, :show], path: 'forumlar' do
+    resources :topics, only: [:new, :create], path: 'konular', path_names: {new: 'yeni'}
+  end
+
+  resources :topics, expect: [:index, :new, :create], path: 'konular', path_names: {edit: 'duzenle'}
+
+  resources :users, only: [:create, :update, :destroy]
   get '/kaydol', to: 'users#new', as: :register
+  get '/:id', to: 'users#show', as: :profile
+  get '/:id/duzenle', to: 'users#edit', as: :edit_profile
+
+  root 'forums#index'
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

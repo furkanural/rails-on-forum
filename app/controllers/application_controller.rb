@@ -7,10 +7,24 @@ class ApplicationController < ActionController::Base
   def login(user)
   	session[:user_id] = user.id
   end
+  
   def current_user
   	@current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   def signed_in?
   	current_user
   end
+  
+  def validate_user!
+    unless signed_in?
+      redirect_to login_url, alert: 'Bu sayfaya erişmeden önce oturum açmalısınız.'
+    end
+  end
+
+  def validate_permission!(user)
+    unless current_user == user
+      redirect_to root_url, alert: 'Bu işlemi gerçekleştiremezsiniz'
+    end
+  end
+
 end
