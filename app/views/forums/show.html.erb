@@ -1,7 +1,7 @@
 <% content_for(:forum_content) do %>
 	<div class="large-12 columns">
 		<div>
-			<h1 class="left"><%= @forum.name %>Forumu</h1>
+			<h1 class="left"><%= @forum.name %> Forumu</h1>
 			<% if signed_in? %>
 				<%= link_to 'Konu Aç', new_forum_topic_path(@forum), class: 'small secondary new button right round' %><hr>
 			<% end %>
