@@ -6,6 +6,12 @@
 				<%= link_to 'Konu Aç', new_forum_topic_path(@forum), class: 'small secondary new button right round' %><hr>
 			<% end %>
 		</div>
-		<p>Foruma ait konular buraya listelenecek</p>
+		<div class="topics panel columns radius">
+			<% if @forum.topics.any? %>
+				<%= render @forum.topics %>
+			<% else %>
+				<p>Henüz hiç bir konu açılmamış.</p>
+			<% end %>
+		</div>
 	</div>
 <% end %>
