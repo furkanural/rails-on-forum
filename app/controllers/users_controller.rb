@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 	before_action :select_user, only: [:show, :edit, :update, :destroy]
-	before_action :allowed?, only: [:edit, :create, :destroy]
+	before_action only: [:edit, :update, :destroy] do
+		validate_permission! select_user
+	end
 
 	def new
 		@user = User.new
@@ -17,13 +19,17 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@data = []
-		if params[:sayfa]
-			render layout: "profile", locals: {page: params[:sayfa]}
+		sayfa = params[:sayfa] || 'konular'
+
+		if sayfa == 'konular'
+			@data = @user.topics
 		else
-			render layout: "profile", locals: {page: 'konular'}
+			@data = []
 		end
+
+		render layout: "profile", locals: {page: sayfa}
 	end
+
 	def edit
 		render layout: "profile"
 	end
@@ -53,13 +59,5 @@ class UsersController < ApplicationController
 
 	def select_user
 		@user = User.find_by_username(params[:id])
-	end
-
-	def allowed?
-		user = select_user
-
-		unless current_user == user
-			redirect_to profile_path(user), alert: 'Bunu yapmaya yetkiniz yok!'
-		end
 	end
 end
