@@ -10,6 +10,21 @@ class CommentsController < ApplicationController
 		@comment = @topic.comments.new
 	end
 
+	def edit
+		
+	end
+	def update
+		if @comment.update(comment_params)
+			redirect_to @comment.topic, notice: 'yorumunuz başarı ile güncellendir'
+		else
+			render :edit
+		end
+	end
+	def destroy
+		@comment.destroy
+		redirect_to @comment.topic, notice: 'yorumunuz başarı ile silindi'
+	end
+
 	def create
 		@topic = Topic.find(params[:topic_id])
 		@comment = @topic.comments.new(comment_params)
