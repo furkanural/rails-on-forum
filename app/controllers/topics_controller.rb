@@ -34,7 +34,7 @@ class TopicsController < ApplicationController
     @topic.user = current_user
 
     if @topic.save
-      redirect_to @topic, notice: 'Konu başarıyla oluşturuldu'
+      redirect_to topic_url(@topic), notice: 'Konu başarıyla oluşturuldu'
     else
       render :new
     end
@@ -45,11 +45,9 @@ class TopicsController < ApplicationController
   def update
     respond_to do |format|
       if @topic.update(topic_params)
-        format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
-        format.json { render :show, status: :ok, location: @topic }
+        redirect_to topic_url(@topic), notice: 'Konu başarıyla güncellendi.'
       else
-        format.html { render :edit }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
+        render :edit
       end
     end
   end
