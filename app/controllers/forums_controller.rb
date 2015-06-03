@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
   def index
   	@forums = Forum.all
-  	@topics = Topic.all
+  	@topics = Topic.includes(:forum, :user)
   end
 
   def show
