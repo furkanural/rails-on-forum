@@ -48,6 +48,7 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
+		logout
 		@user.destroy
 		redirect_to root_url
 	end

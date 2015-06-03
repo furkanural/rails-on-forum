@@ -27,4 +27,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def logout
+    session[:user_id] = nil
+  end
+
 end
