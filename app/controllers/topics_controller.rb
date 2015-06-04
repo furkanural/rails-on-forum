@@ -1,9 +1,10 @@
 class TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :edit, :update, :destroy]
-  before_action :validate_user!, expect: [:show]
-  before_action only: [:edit, :update, :destroy] do 
+  before_action :validate_user!, except: [:show]
+  before_action only: [:edit, :update, :destroy] do
     validate_permission!(set_topic.user)
   end
+  before_action :set_topic, only: [:edit, :update, :destroy]
+  before_action only: [:new, :create] {@forum = Forum.find(params[:forum_id])}
 
   # GET /topics
   # GET /topics.json
@@ -14,6 +15,8 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
+    @topic = Topic.includes(:forum, :comments, :user).find(params[:id])
+    @comments = @topic.comments.includes(:user)
   end
 
   # GET /topics/new

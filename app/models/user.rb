@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
 	def to_param
 		username
 	end
-	def avatar_url
+	def avatar_url(size = 160)
 		hash_value = Digest::MD5.hexdigest(email.downcase)
-		"http://gravatar.com/avatar/#{hash_value}?s=160"
+		"http://gravatar.com/avatar/#{hash_value}?s=#{size}"
 	end
 
 end
