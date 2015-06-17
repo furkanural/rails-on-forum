@@ -45,3 +45,4 @@ end
 
 gem 'foundation-rails'
 gem 'email_validator'
+gem 'redcarpet'

@@ -34,7 +34,7 @@ module ApplicationHelper
 		info = ["<small class='detail'"]
 		info << badge_for(comment.topic) unless params[:controller] == 'topic' 
 		info << info_for(comment.user) unless params[:controller] == 'user'
-		info << time_for(topic) 
+		info << time_for(comment) 
 		info << owner_buttons_for(comment) if current_user == comment.user
 		info << '</small>'
 		info.join.html_safe 
@@ -42,4 +42,25 @@ module ApplicationHelper
 	def owner_buttons_for(comment)
 		'  ' + link_to('Düzenle', edit_comment_path(comment)) + ' | ' + link_to('Sil', comment, method: :delete)
 	end
+	def markdown(text, options={links: true})
+		render_options = {
+			filter_html: true,
+			hard_wrap: true,
+			no_links: !options[:links],
+			highlight: true
+		}
+		renderer = Redcarpet::Render::HTML.new(render_options)
+		extensions = {
+			autolink: true,
+			fenced_code_blocks: true,
+			lax_spacing: true,
+			no_intra_emphasis: true,
+			strikethrough: true,
+			superscript: true,
+			highlight: true
+		}
+		Redcarpet::Markdown.new(renderer, extensions).render(text).html_safe
+
+	end
+
 end
