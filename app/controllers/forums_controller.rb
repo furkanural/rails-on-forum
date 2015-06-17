@@ -1,11 +1,11 @@
 class ForumsController < ApplicationController
+	before_action {@forums = Forum.all}
   def index
-  	@forums = Forum.all
-  	@topics = Topic.includes(:forum, :user)
+  	 @topics = Topic.includes(:forum, :user)
   end
 
   def show
-  	@forums = Forum.all
-  	@forum = Forum.find(params[:id])
+  	@forum  = Forum.find(params[:id])
+    @topics = @forum.topics.includes(:user)
   end
 end
